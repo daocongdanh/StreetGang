@@ -2,25 +2,14 @@ import { Outlet, NavLink } from "react-router";
 import {
   AimOutlined,
   ShoppingOutlined,
-  HomeOutlined,
   LogoutOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 const SideBar = () => {
   const menu = [
     {
-      icon: <HomeOutlined />,
-      link: "/account",
-      title: "Trang chủ",
-    },
-    {
-      icon: <ShoppingOutlined />,
-      link: "/account/order",
-      title: "Lịch sử mua hàng",
-    },
-    {
       icon: <UserOutlined />,
-      link: "/account/information",
+      link: "/account",
       title: "Tài khoản của bạn",
     },
     {
@@ -28,6 +17,12 @@ const SideBar = () => {
       link: "/account/address",
       title: "Địa chỉ của bạn",
     },
+    {
+      icon: <ShoppingOutlined />,
+      link: "/account/order",
+      title: "Lịch sử mua hàng",
+    },
+
     {
       icon: <LogoutOutlined />,
       link: "/logout",

@@ -13,6 +13,11 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import LayoutClient from "./layouts/LayoutClient";
 import BlogPage from "./pages/BlogPage/BlogPage";
 import SalePage from "./pages/SalePage/SalePage";
+import SideBar from "./components/SideBar/SideBar";
+import OrderPage from "./pages/Account/OrderPage/OrderHistoryPage";
+import InformationPage from "./pages/Account/InformationPage/InformationPage";
+import AddressPage from "./pages/Account/AddressPage/AddressPage";
+import OrderDetailPage from "./pages/Account/OrderDetailPage/OrderDetailPage";
 
 function App() {
   const element = useRoutes([
@@ -59,6 +64,28 @@ function App() {
         {
           path: "login",
           element: <LoginPage />,
+        },
+        {
+          path: "account",
+          element: <SideBar />,
+          children: [
+            {
+              path: "",
+              element: <InformationPage />,
+            },
+            {
+              path: "order",
+              element: <OrderPage />,
+            },
+            {
+              path: "order-detail/:orderId",
+              element: <OrderDetailPage />,
+            },
+            {
+              path: "address",
+              element: <AddressPage />,
+            },
+          ],
         },
         {
           path: "*",
