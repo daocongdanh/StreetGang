@@ -4,6 +4,7 @@ const Button = ({
   size = 16,
   radius = 2,
   hoverEffect = true,
+  className="",
 }) => {
   return (
     <button
@@ -14,6 +15,7 @@ const Button = ({
         rounded-[${radius}px] tracking-widest 
         bg-[#252a2b] transition-all duration-500 ease-in-out 
         cursor-pointer
+        ${className}
       `}
       type="submit"
       style={
