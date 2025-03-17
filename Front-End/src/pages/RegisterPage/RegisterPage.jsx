@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { register } from "../../services/userService";
 import { useMessage } from "../../contexts/MessageContext";
 import Button from "../../components/Button/Button";
