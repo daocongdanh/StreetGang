@@ -10,7 +10,7 @@ const corsOptions = require("./src/configurations/corsConfig");
 const route = require("./src/routes/index.route");
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3020;
 
 // Cors
 app.use(cors(corsOptions));

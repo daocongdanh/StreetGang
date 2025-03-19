@@ -1,6 +1,28 @@
 import React from "react";
-
+import { login } from "../../services/userService";
+import { useMessage } from "../../contexts/MessageContext";
+import { useNavigate } from "react-router";
 export default function Login() {
+  const { success, error } = useMessage();
+  const navigate = useNavigate();
+  const [phone, setPhone] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const handleClick = async (event) => {
+    event.preventDefault();
+    try {
+      const loginData  = {
+        phone, password
+      };
+      const response = await login(loginData );
+      console.log("Login response:", response); // Kiểm tra response từ API
+      localStorage.setItem("user", JSON.stringify(response.data));
+      success("Đăng nhập thành công");
+      navigate("/");
+    } catch (err) {
+      error(err.response.data.message);
+    }
+  };
+
   return (
     <div className="min-h-[80vh] pt-6 flex justify-center items-center">
       <div className="bg-white max-w-2xl w-full p-10 shadow-md rounded-md">
@@ -10,15 +32,17 @@ export default function Login() {
             <span className="block w-14 h-1 bg-black mt-2 mx-auto"></span>
           </h1>
         </div>
-        <form action="#" method="post">
+        <form onSubmit={handleClick}>
           <div className="mb-6">
             <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Email"
+              id="phone"
+              name="phone"
+              type="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Phone number"
               required
-              autoComplete="email"
+              autoComplete="phone"
               className="w-full h-14 px-5 text-gray-600 font-medium border border-transparent bg-[#ededed] outline-none focus:ring-2 focus:ring-black"
             />
           </div>
@@ -27,6 +51,8 @@ export default function Login() {
               id="password"
               name="password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Mật khẩu"
               required
               autoComplete="current-password"
