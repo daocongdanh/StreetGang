@@ -4,7 +4,7 @@ const Button = ({
   size = 16,
   radius = 2,
   hoverEffect = true,
-  className="",
+  className = "",
 }) => {
   return (
     <button
