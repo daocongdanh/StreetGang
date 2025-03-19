@@ -2,7 +2,9 @@ import Slider from "react-slick";
 import { Link, NavLink } from "react-router";
 import { FaShoppingCart, FaRegUser } from "react-icons/fa";
 import Search from "../Search/Search";
-const Header = () => {
+import { useEffect, useState } from "react";
+import { getAllCategories } from "../../services/categoryService";
+const Header = ({ cartCount }) => {
   var settings = {
     infinite: true,
     fade: true,
@@ -20,23 +22,35 @@ const Header = () => {
       link: "/",
     },
     {
-      title: "SALE",
-      link: "/sale",
+      title: "Thành viên",
+      link: "/member",
     },
     {
       title: "Sản phẩm",
       link: "/collections",
     },
     {
-      title: "Blog",
-      link: "/blog",
+      title: "Bài viết",
+      link: "/blogs/news",
     },
     {
       title: "Liên hệ",
-      link: "/contact",
+      link: "/pages/about-us",
     },
   ];
-  const categories = ["JACKET", "HOODIE", "ÁO THUN", "QUẦN", "PHỤ KIỆN"];
+  const [categories, setCategories] = useState(null);
+  useEffect(() => {
+    const fetchApi = async () => {
+      try {
+        const data = await getAllCategories();
+        setCategories(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchApi();
+  }, []);
+
   return (
     <>
       <div className="sticky z-[999] top-0 bg-white">
@@ -73,27 +87,20 @@ const Header = () => {
                   {item.title === "Sản phẩm" && (
                     <div className="absolute left-0 hidden group-hover:block bg-white text-black shadow-md p-[10px] w-[250px] mt-[5px]">
                       <ul>
-                        <li className="py-[8px] text-[14px]">
-                          <Link
-                            to={`collections?category=bo-suu-tap-moi`}
-                            className="uppercase"
-                          >
-                            New Collection
-                          </Link>
-                        </li>
-                        {categories.map((item, index) => (
-                          <li
-                            className="py-[8px] text-[14px]"
-                            key={`${index}aaa`}
-                          >
-                            <Link
-                              to={`collections?category=${item}`}
-                              className="uppercase"
+                        {categories &&
+                          categories.data.map((item, index) => (
+                            <li
+                              className="py-[8px] text-[14px]"
+                              key={`${index}aaa`}
                             >
-                              {item}
-                            </Link>
-                          </li>
-                        ))}
+                              <Link
+                                to={`collections?category=${item.slug}`}
+                                className="uppercase"
+                              >
+                                {item.name}
+                              </Link>
+                            </li>
+                          ))}
                       </ul>
                     </div>
                   )}
@@ -112,7 +119,7 @@ const Header = () => {
                   className="w-[16px] h-[16px] bg-[#C50017] text-white px-[3px] rounded-[50%] text-[11px] flex 
                 items-center justify-center absolute top-[-5px] right-[-8px]"
                 >
-                  2
+                  {cartCount}
                 </div>
               </Link>
             </div>

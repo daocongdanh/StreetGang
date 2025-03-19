@@ -1,0 +1,208 @@
+.cartPage {
+  font-family: "Open Sans", sans-serif;
+  main {
+    position: relative;
+    margin-top: 20px;
+    display: flex;
+
+    section {
+      position: relative;
+      width: 68%;
+      height: fit-content;
+      background: white;
+      margin-right: 30px;
+
+      h1 {
+        font-size: 20px;
+        border-bottom: 1px solid #e7e7e7;
+        padding: 10px 0 10px 15px;
+      }
+
+      article {
+        padding: 20px 16px;
+        p {
+          font-size: 17px;
+          margin-bottom: 20px;
+        }
+
+        .cart-list {
+          position: relative;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #ffffff;
+          border: 2px solid #e7e7e7;
+          border-radius: 8px;
+          padding: 8px 10px;
+          overflow: hidden;
+
+          .cart-item {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 10px;
+
+            &:not(:first-child) {
+              border-top: 1px solid #f1f1f1;
+            }
+
+            .content-left {
+              position: relative;
+
+              .item-img {
+                width: 80px;
+                height: 80px;
+                border: 1px solid #ededed;
+              }
+
+              .item-remove {
+                position: absolute;
+                top: -10%;
+                left: -10%;
+                width: 20px;
+                height: 20px;
+                background: #8f9bb3;
+                border-radius: 50%;
+                font-size: 8px;
+                text-align: center;
+                line-height: 20px;
+                color: white;
+                cursor: pointer;
+              }
+            }
+
+            .content-center {
+              flex: 1 1 auto;
+              padding-left: 18px;
+              padding-right: 18px;
+            }
+          }
+        }
+
+        .note-container {
+          background: rgba(0, 0, 0, 0.03);
+          margin: 20px 0 10px;
+          background: rgba(0, 0, 0, 0.03);
+          padding: 10px 12px 15px;
+
+          h2 {
+            font-size: 14px;
+            margin: 5px 0 10px 10px;
+          }
+
+          textarea {
+            padding: 10px 15px;
+            width: 100% !important;
+            height: 80px;
+            min-height: 80px;
+            max-width: 100%;
+            resize: auto;
+            border: 1px solid #0c0c0c;
+            box-shadow: none;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border-radius: 5px; 
+          }
+        }
+      }
+    }
+
+    aside {
+      width: 31%;
+      height: 500px;
+      .order-detail {
+        background: white;
+        padding: 15px;
+        margin-bottom: 15px;
+
+        h1 {
+          font-size: 20px;
+          margin: 10px 0 15px;
+        }
+
+        .summary-total {
+          border-top: 1px dotted #dfe0e1;
+          border-bottom: 1px dotted #dfe0e1;
+          margin-bottom: 10px;
+          padding: 10px 0;
+
+          p {
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            span {
+              color: red;
+              font-size: 24px;
+            }
+          }
+        }
+
+        .summary-action {
+          ul {
+            list-style: disc;
+            padding-left: 20px;
+
+            li {
+              font-size: 14px;
+
+              &::marker {
+                color: #999999;
+                font-size: 0.8em;
+              }
+            }
+          }
+
+          .alert-notification {
+            padding: 10px 15px;
+            background-color: #fee3e8;
+            border: 1px solid #fdd0d8;
+            color: #d20909;
+            font-size: 13px;
+            padding: 10px 15px;
+            margin: 10px 0;
+            text-align: left;
+            border-radius: 4px;
+          }
+        }
+      }
+
+      .policy-notification {
+        padding: 12px 15px;
+        border-radius: 4px;
+        background-color: #d9edf7;
+        border: 1px solid #bce8f1;
+
+        h2 {
+          font-size: 14px;
+        }
+
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  h1,
+  h2 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: #080808;
+  }
+}
+
+.cart-modal-buttons {
+  display: flex;
+  justify-content: center;
+  column-gap: 15px;
+
+  button {
+    width: 25%;
+    font-weight: bold;
+  }
+}

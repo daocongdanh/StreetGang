@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Breadcrumb, Menu } from "antd";
 import { Link } from "react-router";
+import { getBlogs } from "../../services/blogService";
 import "./BlogPage.scss";
 
 const menuLink = [
@@ -17,7 +18,7 @@ const menuLink = [
     link: "/collections",
   },
   {
-    title: "Blog",
+    title: "Bài viết",
   },
   {
     title: "Liên hệ",
@@ -38,15 +39,15 @@ const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://222.255.214.36:5000/blogs")
-      .then((res) => res.json())
-      .then((data) => {
-        const sortedBlogs = data.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
-        );
-        setBlogs(sortedBlogs);
-      })
-      .catch((error) => console.error("Lỗi khi lấy dữ liệu:", error));
+    const fetchApi = async () => {
+      try {
+        const response = await getBlogs();
+        setBlogs(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchApi();
   }, []);
 
   const formatDate = (dateString) => {
@@ -71,7 +72,7 @@ const BlogPage = () => {
         ]}
         style={{ paddingTop: "8px" }}
       />
-      <img style={{ marginTop: "10px" }} src="./blog-banner.png" alt="banner" />
+      <img style={{ marginTop: "10px" }} src="/blog-banner.png" alt="banner" />
 
       <main>
         <section>
