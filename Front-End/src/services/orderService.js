@@ -6,7 +6,7 @@ export const createOrder = async (data) => {
 };
 
 export const getOrderByUser = async (userId) => {
-  const response = await get(`orders/user/${userId}`, data);
+  const response = await get(`orders/user/${userId}`);
   return response;
 };
 
