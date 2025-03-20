@@ -97,7 +97,7 @@ const AddressPage = () => {
       try {
         await deleteAddress(user.userId, addressId);
         setReload(!reload);
-        success("Xóa địa chỉ thành công địa chỉ thành công");
+        success("Xóa địa chỉ thành công");
       } catch (error) {
         console.log(error);
       }
@@ -112,7 +112,7 @@ const AddressPage = () => {
       await updateAddress(addressUpdate.id, { ...values, userId: user.userId });
       setReload(!reload);
       handleCancelUpdate();
-      success("Cập nhật địa chỉ thành công địa chỉ thành công");
+      success("Cập nhật địa chỉ thành công");
     } catch (error) {
       console.log(error);
     }
@@ -120,7 +120,7 @@ const AddressPage = () => {
   return (
     <>
       {user && (
-        <div className="bg-white py-[20px] px-[60px] min-h-[600px] rounded-[15px] border-[1px] border-gray-200 text-center">
+        <div className="bg-white py-[30px] px-[60px] min-h-[600px] rounded-[15px] text-center">
           <div className="text-start mb-[10px]">
             <button
               className="border-[1px] rounded-[6px] px-[8px] py-[4px] border-gray-200 hover:border-gray-950 transition-all duration-100 ease-in-out"

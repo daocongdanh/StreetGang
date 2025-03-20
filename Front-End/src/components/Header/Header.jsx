@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import { Link, NavLink } from "react-router";
 import { FaShoppingCart, FaRegUser } from "react-icons/fa";
+import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import Search from "../Search/Search";
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../../services/categoryService";
@@ -35,7 +36,7 @@ const Header = () => {
     },
     {
       title: "Liên hệ",
-      link: "/pages/about-us",
+      link: "/contact",
     },
   ];
   const [categories, setCategories] = useState(null);
@@ -111,10 +112,20 @@ const Header = () => {
             <div className="flex items-center">
               <Search />
               <Link to="/account">
-                <FaRegUser className="text-gray-600 text-[22px] ml-[20px]" />
+                <UserOutlined
+                  className="text-2xl ml-[20px]"
+                  style={{
+                    color: "#4a5565",
+                  }}
+                />
               </Link>
               <Link to="/cart" className="relative">
-                <FaShoppingCart className="text-gray-600 text-[22px] ml-[20px]" />
+                <ShoppingCartOutlined
+                  className="text-2xl ml-[20px]"
+                  style={{
+                    color: "#4a5565",
+                  }}
+                />
                 <div
                   className="w-[16px] h-[16px] bg-[#C50017] text-white px-[3px] rounded-[50%] text-[11px] flex 
                 items-center justify-center absolute top-[-5px] right-[-8px]"

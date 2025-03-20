@@ -37,7 +37,7 @@ const HomePage = () => {
           <ProductList data={productNews} />
           <ButtonCategory
             title={"Street gang collection"}
-            link={`/collections?category=bo-suu-tap-moi`}
+            link={`/collections`}
           />
           <div className="my-[20px] overflow-hidden">
             <img

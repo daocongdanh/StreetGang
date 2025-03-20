@@ -5,13 +5,10 @@ import {
   LogoutOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+
 const SideBar = () => {
   const menu = [
-    {
-      icon: <UserOutlined />,
-      link: "/account",
-      title: "Tài khoản của bạn",
-    },
+    { icon: <UserOutlined />, link: "/account", title: "Tài khoản của bạn" },
     {
       icon: <AimOutlined />,
       link: "/account/address",
@@ -22,35 +19,35 @@ const SideBar = () => {
       link: "/account/order",
       title: "Lịch sử mua hàng",
     },
-
-    {
-      icon: <LogoutOutlined />,
-      link: "/logout",
-      title: "Thoát tài khoản",
-    },
+    { icon: <LogoutOutlined />, link: "/logout", title: "Thoát tài khoản" },
   ];
+
   return (
-    <div className="flex py-[40px]">
-      <ul className="bg-white w-[25%] mr-[30px] rounded-[15px] border-[1px] border-gray-200 p-[15px] min-h-[600px]">
+    <div className="flex py-10">
+      {/* Sidebar Menu */}
+      <ul className="bg-white w-[280px] mr-8 rounded-xl border border-gray-200 shadow-lg p-5 min-h-[600px]">
         {menu.map((item, index) => (
-          <li
-            key={index}
-            className={`text-[18px] ${
-              index !== menu.length - 1 ? "mb-[15px]" : ""
-            }`}
-          >
+          <li key={index} className="mb-4">
             <NavLink
               to={item.link}
               end={item.link === "/account"}
-              className="sidebar flex items-center px-[5px] pt-[3px] rounded-[8px] border-[1px] border-transparent"
+              className={({ isActive }) =>
+                `flex items-center p-3 font-semibold rounded-lg transition-all duration-300 ${
+                  isActive
+                    ? "bg-gray-200 text-black font-semibold"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`
+              }
             >
-              {item.icon}
-              <span className="ml-[20px]">{item.title}</span>
+              <span className="text-xl">{item.icon}</span>
+              <span className="ml-4">{item.title}</span>
             </NavLink>
           </li>
         ))}
       </ul>
-      <div className="flex-1">
+
+      {/* Nội dung bên phải */}
+      <div className="flex-1 bg-white rounded-xl shadow-md">
         <Outlet />
       </div>
     </div>
