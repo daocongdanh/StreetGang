@@ -1,7 +1,7 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import {
   getProductBySlug,
   getTop5Product,
@@ -16,7 +16,7 @@ import Review from "../../components/Review/Review";
 import { useMessage } from "../../contexts/MessageContext";
 import { useCart } from "../../contexts/CartContext";
 const ProductPage = () => {
-  const { success } = useMessage();
+  const { success, error } = useMessage();
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   let sliderRef1 = useRef(null);
@@ -28,6 +28,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
   const [top5Product, setTop5Product] = useState(null);
   const { addCart, isLoading } = useCart();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchApi = async () => {
       try {
@@ -49,6 +50,12 @@ const ProductPage = () => {
     setNav2(sliderRef2);
   }, [product]);
   const handleAddToCart = async () => {
+    const isAuthenticated = !!localStorage.getItem("user");
+    if (!isAuthenticated) {
+      error("Vui lòng đăng nhập trước khi thêm sản phẩm vào giỏ hàng!");
+      navigate("/login");
+    }
+
     const userId = JSON.parse(localStorage.getItem("user")).userId;
     const data = {
       productId: product._id,

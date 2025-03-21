@@ -2,7 +2,7 @@ import { FaStar, FaRegStar, FaUser } from "react-icons/fa6";
 import { CameraOutlined } from "@ant-design/icons";
 import Button from "../Button/Button";
 import { Image, Modal } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Upload, Rate } from "antd";
 import {
   createReview,
