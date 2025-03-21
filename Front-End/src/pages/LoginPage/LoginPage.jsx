@@ -18,7 +18,6 @@ export default function Login() {
         password,
       };
       const response = await login(loginData);
-      console.log("Login response:", response); // Kiểm tra response từ API
       localStorage.setItem("user", JSON.stringify(response.data));
       success("Đăng nhập thành công");
       navigate("/");

@@ -1,5 +1,4 @@
 import { InputNumber, ConfigProvider } from "antd";
-import { useEffect, useState } from "react";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useCart } from "../../contexts/CartContext";

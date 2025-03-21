@@ -31,6 +31,7 @@ export default function OrderPage() {
 
     fetchOrders();
   }, [location.search]);
+
   const handleChange = (page) => {
     setCurrentPage(page);
     searchParams.set("page", page);

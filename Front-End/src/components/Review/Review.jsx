@@ -2,7 +2,7 @@ import { FaStar, FaRegStar, FaUser } from "react-icons/fa6";
 import { CameraOutlined } from "@ant-design/icons";
 import Button from "../Button/Button";
 import { Image, Modal } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Upload, Rate } from "antd";
 import {
   createReview,
@@ -11,6 +11,7 @@ import {
 import { createFile } from "../../services/fileService";
 import { getProductById } from "../../services/productService";
 import { useMessage } from "../../contexts/MessageContext";
+import { useNavigate } from "react-router";
 const Review = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileList, setFileList] = useState([]);
@@ -23,6 +24,7 @@ const Review = (props) => {
   const { productId } = props;
   const [product, setProduct] = useState(null);
   const { success, error } = useMessage();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchApi = async () => {
       const result = await getReviewsByProduct(
@@ -37,6 +39,12 @@ const Review = (props) => {
   }, [productId, reload, limit, sort]);
 
   const showModal = () => {
+    const isAuthenticated = !!localStorage.getItem("user");
+    if (!isAuthenticated) {
+      error("Vui lòng đăng nhập trước khi đánh giá!");
+      navigate("/login");
+    }
+
     setIsModalOpen(true);
   };
   const handleCancel = () => {
@@ -83,6 +91,10 @@ const Review = (props) => {
       return;
     }
     const userId = JSON.parse(localStorage.getItem("user")).userId;
+    if (rate == 0) {
+      error("Vui lòng chọn số sao > 0!!!");
+      return;
+    }
     const data = {
       userId: userId,
       rating: rate,
