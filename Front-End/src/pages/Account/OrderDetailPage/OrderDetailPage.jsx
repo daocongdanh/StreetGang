@@ -34,7 +34,7 @@ export default function OrderDetailPage() {
   }
 
   return (
-    <div className="bg-white py-8 px-20 min-h-screen rounded-lg border border-gray-200">
+    <div className="bg-white py-8 px-20 rounded-lg border border-gray-200">
       <h1 className="text-2xl font-bold text-gray-900 mb-8">
         Chi tiết đơn hàng
       </h1>
