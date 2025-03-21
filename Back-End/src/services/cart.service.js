@@ -28,7 +28,7 @@ class CartService {
         image: product.images[0],
         price: product.price,
         discountedPrice: product.discountedPrice,
-        quantity: 1,
+        quantity: quantity,
         color: color,
         size: size,
       };
