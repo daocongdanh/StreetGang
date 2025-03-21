@@ -1,50 +1,41 @@
 import React from "react";
-export default function MemberPage() {
-  const members = [
-    {
-      name: "Đào Đức Danh",
-      mssv: "22731781",
-      avatar: "../public/logo.png",
-    },
-    {
-      name: "Phan Khánh Chương",
-      mssv: "22674951",
-      avatar: "../public/logo.png",
-    },
-    {
-      name: "Huỳnh Kim Đảm",
-      mssv: "22716751",
-      avatar: "../public/logo.png",
-    },
-    {
-      name: "Phạm Ngọc Đăng",
-      mssv: "22640201",
-      avatar: "../public/logo.png",
-    },
-    {
-      name: "Đặng Nguyên Danh",
-      mssv: "22724221",
-      avatar: "../public/logo.png",
-    },
-  ];
 
+const members = [
+  { name: "Đào Đức Danh", mssv: "22731781", avatar: "danhkhung.jpg" },
+  {
+    name: "Phan Khánh Chương",
+    mssv: "22674951",
+    avatar: "chuong.jpg",
+  },
+  { name: "Huỳnh Kim Đảm", mssv: "22716751", avatar: "chudong.jpg" },
+  { name: "Phạm Ngọc Đăng", mssv: "22640201", avatar: "NgocDang.jpg" },
+  {
+    name: "Đặng Nguyên Danh",
+    mssv: "22724221",
+    avatar: "../img/huynhhoaithanh.jpg",
+  },
+];
+
+export default function MemberPage() {
   return (
-    <div className="py-20 flex items-center justify-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="p-8 rounded-2xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {members.map((member, index) => (
           <div
             key={index}
-            className="bg-white shadow-lg rounded-2xl p-5 flex flex-col items-center"
+            className="bg-white shadow-lg rounded-2xl p-6 flex flex-col items-center transition-transform transform hover:scale-105"
           >
-            <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-gray-300 transform transition-transform duration-300 hover:scale-110">
+            <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-gray-300 relative">
               <img
                 src={member.avatar}
                 alt={member.name}
                 className="w-full h-full object-cover"
               />
             </div>
-            <h3 className="mt-3 text-lg font-semibold">{member.name}</h3>
-            <p className="text-gray-600">MSSV: {member.mssv}</p>
+            <div className="text-center mt-4">
+              <h5 className="text-xl font-semibold">{member.name}</h5>
+              <p className="text-gray-600">MSSV: {member.mssv}</p>
+            </div>
           </div>
         ))}
       </div>

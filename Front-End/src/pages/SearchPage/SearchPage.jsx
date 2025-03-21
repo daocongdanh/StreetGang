@@ -48,7 +48,7 @@ const SearchPage = () => {
   return (
     <>
       <div
-        className={`pt-[30px] text-center text-[#080808] ${
+        className={`py-[30px] text-center text-[#080808] ${
           products && products.totalItem > 0 ? "" : " h-[80vh]"
         }`}
       >

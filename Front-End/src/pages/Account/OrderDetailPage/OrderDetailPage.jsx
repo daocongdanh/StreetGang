@@ -9,7 +9,7 @@ export default function OrderDetailPage() {
   useEffect(() => {
     const fetchOrderDetail = async () => {
       try {
-        const response = await getOrderById(orderId); // 🛠 GỌI API ĐÚNG HÀM `getOrderById`
+        const response = await getOrderById(orderId);
         if (response.code === 200) {
           setOrder(response.data);
         }
@@ -21,86 +21,97 @@ export default function OrderDetailPage() {
     fetchOrderDetail();
   }, [orderId]);
 
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("vi-VN").format(amount) + " đ";
+  };
+
   if (!order) {
-    return <div className="text-center py-10">Loading order details...</div>;
+    return (
+      <div className="text-center py-10 text-lg font-semibold">
+        Đang tải chi tiết đơn hàng...
+      </div>
+    );
   }
 
   return (
-    <div className="bg-white py-5 px-20 min-h-[600px] rounded-lg border border-gray-200">
-      <div className="mb-6 p-4 bg-gray-200 rounded-lg grid grid-cols-4 gap-4">
+    <div className="bg-white py-8 px-20 min-h-screen rounded-lg border border-gray-200">
+      <h1 className="text-2xl font-bold text-gray-900 mb-8">
+        Chi tiết đơn hàng
+      </h1>
+      <div className="mb-6 p-6 bg-gray-100 rounded-lg grid grid-cols-3 gap-6">
         <div>
-          <h2 className="text-sm font-semibold text-gray-600">ORDER NO:</h2>
-          <p className="text-lg font-semibold">{order.orderId}</p>
+          <h3 className="text-sm font-semibold text-gray-600">
+            Ngày đặt hàng:
+          </h3>
+          <p className="text-lg font-semibold">
+            {new Date(order.orderDate).toLocaleDateString()}
+          </p>
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-gray-600">SHIPPED DATE:</h2>
-          <p className="text-lg font-semibold">{order.updatedAt}</p>
+          <h3 className="text-sm font-semibold text-gray-600">Trạng thái:</h3>
+          <span className="text-lg font-semibold">
+            {order.orderStatus === "Pending" ? "Chờ xác nhận" : "Hoàn thành"}
+          </span>
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-gray-600">STATUS:</h2>
-          <p className="text-lg font-semibold">{order.orderStatus}</p>
-        </div>
-        <div>
-          <h2 className="text-sm font-semibold text-gray-600">ORDER AMOUNT:</h2>
-          <p className="text-lg font-semibold">${order.totalAmount}</p>
+          <h3 className="text-sm font-semibold text-gray-600">Tổng tiền:</h3>
+          <p className="text-lg font-semibold">
+            {formatCurrency(order.totalAmount)}
+          </p>
         </div>
       </div>
-      
-      {/* Danh sách sản phẩm trong đơn hàng */}
-      <div className="p-4 border border-gray-300 rounded-lg">
-        <h3 className="text-lg font-semibold">Order Items ({order.items.length})</h3>
+
+      <div className="p-6 border border-gray-300 rounded-lg">
+        <h3 className="text-xl font-semibold">
+          Sản phẩm ({order.items.length})
+        </h3>
         <div className="mt-4 space-y-4">
           {order.items.map((item, i) => (
-            <div key={i} className="flex items-center space-x-4 border-b border-gray-300 pb-4">
-              <img src={item.image} alt={item.name} className="w-20 h-20 rounded-lg" />
+            <div
+              key={i}
+              className={`flex items-center space-x-6 ${
+                i !== order.items.length - 1
+                  ? "border-b border-gray-300 pb-4"
+                  : ""
+              }`}
+            >
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-24 h-24 rounded-lg shadow"
+              />
               <div>
-                <h4 className="font-semibold">{item.name} x {item.quantity}</h4>
-                <p>${item.price}</p>
-                <p>Size: {item.size} | Color: {item.color}</p>
+                <h4 className="font-semibold text-lg">
+                  {item.name} x {item.quantity}
+                </h4>
+                <p className="text-gray-700">
+                  Giá: {formatCurrency(item.price)}
+                </p>
+                <p className="text-gray-500">
+                  Size: {item.size} | Màu: {item.color}
+                </p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Tổng tiền đơn hàng */}
-      <div className="p-4 border border-gray-300 rounded-lg mt-6">
-        <h3 className="text-lg font-semibold">Order Total</h3>
-        <div className="mt-2">
-          <div className="flex justify-between border-b border-gray-300 py-2">
-            <span>Subtotal</span>
-            <span className="font-semibold">${order.subtotal}</span>
-          </div>
-          <div className="flex justify-between border-b border-gray-300 py-2">
-            <span>Tax</span>
-            <span className="font-semibold">${}</span>
-          </div>
-          <div className="flex justify-between border-b border-gray-300 py-2">
-            <span>Shipping</span>
-            <span className="font-semibold">${order.fee}</span>
-          </div>
-          <div className="flex justify-between py-2 text-xl font-bold">
-            <span>Total</span>
-            <span>${order.totalAmount}</span>
-          </div>
-        </div>
-      </div>
-      
-      {/* Thông tin giao hàng */}
-      <div className="p-4 border border-gray-300 rounded-lg mt-6">
-        <h3 className="text-lg font-semibold">Shipping Information</h3>
-        <div className="grid grid-cols-3 gap-4 mt-2">
+      <div className="p-6 border border-gray-300 rounded-lg mt-6">
+        <h3 className="text-xl font-semibold">Thông tin giao hàng</h3>
+        <div className="grid grid-cols-3 gap-6 mt-4">
           <div>
-            <p className="font-semibold">Billing Address:</p>
-            <p>{order.address}</p>
+            <p className="font-semibold text-gray-600">Địa chỉ:</p>
+            <p className=" font-semibold">{order.address}</p>
           </div>
           <div>
-            <p className="font-semibold">Shipping Address:</p>
-            <p>{order.address}</p>
+            <p className="font-semibold text-gray-600">Phí vận chuyển:</p>
+            <p className="font-semibold">{formatCurrency(order.fee)}</p>
           </div>
           <div>
-            <p className="font-semibold">Shipping Method:</p>
-            <p>{order.shippingMethod}</p>
+            <p className="font-semibold text-gray-600">
+              Phương thức thanh toán:
+            </p>
+            <p className=" font-semibold">{order.paymentMethod.name}</p>
           </div>
         </div>
       </div>

@@ -5,8 +5,8 @@ export const createOrder = async (data) => {
   return response;
 };
 
-export const getOrderByUser = async (userId) => {
-  const response = await get(`orders/user/${userId}`);
+export const getOrderByUser = async (userId, page) => {
+  const response = await get(`orders/user/${userId}?page=${page}`);
   return response;
 };
 
