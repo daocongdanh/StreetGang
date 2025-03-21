@@ -155,6 +155,20 @@ class OrderService {
   static getOrderByUser = async (req) => {
     const { userId } = req.params;
 
+    var totalItem = (
+      await Order.find({
+        userId: userId,
+      })
+    ).length;
+
+    const limit = 2;
+
+    var page = parseInt(req.query.page || 0);
+    page = page > 0 ? page - 1 : page;
+
+    const totalPage = Math.ceil(totalItem / limit);
+    const skipCount = page * limit;
+
     const user = await User.findOne({
       _id: userId,
     });
@@ -165,15 +179,25 @@ class OrderService {
 
     const orders = await Order.find({
       userId: userId,
-    });
-    return orders;
+    })
+      .skip(skipCount)
+      .limit(limit);
+
+    const data = {
+      page: page + 1,
+      limit: limit,
+      totalPage: totalPage,
+      totalItem: totalItem,
+      result: orders,
+    };
+    return data;
   };
 
   static getOrderById = async (req) => {
     const { id } = req.params;
     const order = await Order.findOne({
       _id: id,
-    });
+    }).populate("paymentMethod");
 
     if (!order) {
       throw new ResourceNotFoundException(
