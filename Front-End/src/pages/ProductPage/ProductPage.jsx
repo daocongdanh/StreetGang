@@ -11,10 +11,10 @@ import NextArrow from "../../components/CustomArrow/NextArrow";
 import PrevArrow from "../../components/CustomArrow/PrevArrow";
 import Button from "../../components/Button/Button";
 import { getCodeColor } from "../../utils/getCodeColor";
-import { addToCart } from "../../services/cartService";
 import ProductList from "../../components/Product/ProductList";
 import Review from "../../components/Review/Review";
 import { useMessage } from "../../contexts/MessageContext";
+import { useCart } from "../../contexts/CartContext";
 const ProductPage = () => {
   const { success } = useMessage();
   const [nav1, setNav1] = useState(null);
@@ -27,6 +27,7 @@ const ProductPage = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
   const [top5Product, setTop5Product] = useState(null);
+  const { addCart, isLoading } = useCart();
   useEffect(() => {
     const fetchApi = async () => {
       try {
@@ -56,14 +57,10 @@ const ProductPage = () => {
       size: size,
       userId,
     };
-    try {
-      const result = await addToCart(data);
-      if (result.code === 200) {
-        success("Thêm sản phẩm vào giỏ hàng thành công");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    addCart(data);
+    setTimeout(() => {
+      success("Thêm sản phẩm vào giỏ hàng thành công");
+    }, 300);
   };
   return (
     <>
@@ -200,11 +197,15 @@ const ProductPage = () => {
               </div>
               {product.quantity === 0 ? (
                 <div className="w-full" onClick={handleAddToCart}>
-                  <Button title={"Hết hàng"} block={true} />
+                  <Button loading={isLoading} title={"Hết hàng"} block={true} />
                 </div>
               ) : (
                 <div className="w-full" onClick={handleAddToCart}>
-                  <Button title={"Thêm vào giỏ"} block={true} />
+                  <Button
+                    loading={isLoading}
+                    title={"Thêm vào giỏ"}
+                    block={true}
+                  />
                 </div>
               )}
             </div>

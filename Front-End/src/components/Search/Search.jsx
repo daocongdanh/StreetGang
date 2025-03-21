@@ -59,7 +59,10 @@ const Search = () => {
         open={open}
         key={"top"}
         height={"auto"}
-        headerStyle={{ display: "none" }}
+        // headerStyle={{ display: "none" }}
+        styles={{
+          header: { display: "none" },
+        }}
       >
         <div className="w-[1192px] mx-auto flex relative">
           <Link to={"/"} className="py-[10px]">

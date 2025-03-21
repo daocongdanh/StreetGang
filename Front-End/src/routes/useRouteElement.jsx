@@ -16,6 +16,7 @@ import OrderDetailPage from "../pages/Account/OrderDetailPage/OrderDetailPage";
 import AddressPage from "../pages/Account/AddressPage/AddressPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import MemberPage from "../pages/MemberPage/MemberPage";
+import PaymentStatus from "../pages/PaymentStatus/PaymentStatus";
 import { useRoutes } from "react-router";
 
 export default function useRouteElement() {
@@ -59,6 +60,10 @@ export default function useRouteElement() {
         {
           path: "search",
           element: <SearchPage />,
+        },
+        {
+          path: "payment-status/:status",
+          element: <PaymentStatus />,
         },
         {
           path: "register",

@@ -1,12 +1,15 @@
-import { Outlet, NavLink } from "react-router";
+import { Outlet, NavLink, useNavigate } from "react-router";
 import {
   AimOutlined,
   ShoppingOutlined,
   LogoutOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { useMessage } from "../../contexts/MessageContext";
 
 const SideBar = () => {
+  const { success } = useMessage();
+  const navigate = useNavigate();
   const menu = [
     { icon: <UserOutlined />, link: "/account", title: "Tài khoản của bạn" },
     {
@@ -19,8 +22,12 @@ const SideBar = () => {
       link: "/account/order",
       title: "Lịch sử mua hàng",
     },
-    { icon: <LogoutOutlined />, link: "/logout", title: "Thoát tài khoản" },
   ];
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    success("Đăng xuất thành công!");
+    navigate("/login");
+  };
 
   return (
     <div className="flex py-10">
@@ -44,6 +51,15 @@ const SideBar = () => {
             </NavLink>
           </li>
         ))}
+        <li
+          className="flex items-center p-3 font-semibold rounded-lg transition-all duration-300 text-gray-700 hover:bg-gray-100 cursor-pointer"
+          onClick={handleLogout}
+        >
+          <span className="text-xl">
+            <LogoutOutlined />
+          </span>
+          <span className="ml-4">Thoát tài khoản</span>
+        </li>
       </ul>
 
       {/* Nội dung bên phải */}

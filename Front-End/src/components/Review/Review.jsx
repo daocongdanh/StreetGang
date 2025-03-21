@@ -8,9 +8,9 @@ import {
   createReview,
   getReviewsByProduct,
 } from "../../services/reviewService";
-// import useMessage from "../../hooks/useMessage";
 import { createFile } from "../../services/fileService";
 import { getProductById } from "../../services/productService";
+import { useMessage } from "../../contexts/MessageContext";
 const Review = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileList, setFileList] = useState([]);
@@ -20,10 +20,9 @@ const Review = (props) => {
   const [sort, setSort] = useState("reviewDate:-1");
   const [limit, setLimit] = useState(3);
   const [reload, setReload] = useState(true);
-  const userId = localStorage.getItem("userId");
   const { productId } = props;
   const [product, setProduct] = useState(null);
-  // const { error, contextHolder } = useMessage();
+  const { success, error } = useMessage();
   useEffect(() => {
     const fetchApi = async () => {
       const result = await getReviewsByProduct(
@@ -80,9 +79,10 @@ const Review = (props) => {
 
   const handleSubmit = async () => {
     if (content === "") {
-      // error("Vui lòng nhập đánh giá !!!");
+      error("Vui lòng nhập đánh giá !!!");
       return;
     }
+    const userId = JSON.parse(localStorage.getItem("user")).userId;
     const data = {
       userId: userId,
       rating: rate,
@@ -116,6 +116,7 @@ const Review = (props) => {
       };
       const result = await createReview(data);
       if (result.code === 201) {
+        success("Đánh giá thành công!");
         onReload();
       } else {
         error("Lỗi server");

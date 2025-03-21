@@ -5,7 +5,9 @@ import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import Search from "../Search/Search";
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../../services/categoryService";
+import { useCart } from "../../contexts/CartContext";
 const Header = () => {
+  const { totalItem } = useCart();
   var settings = {
     infinite: true,
     fade: true,
@@ -32,7 +34,7 @@ const Header = () => {
     },
     {
       title: "Bài viết",
-      link: "/blogs/news",
+      link: "/blog",
     },
     {
       title: "Liên hệ",
@@ -130,7 +132,7 @@ const Header = () => {
                   className="w-[16px] h-[16px] bg-[#C50017] text-white px-[3px] rounded-[50%] text-[11px] flex 
                 items-center justify-center absolute top-[-5px] right-[-8px]"
                 >
-                  2
+                  {totalItem()}
                 </div>
               </Link>
             </div>
