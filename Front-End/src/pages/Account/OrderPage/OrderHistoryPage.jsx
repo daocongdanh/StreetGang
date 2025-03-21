@@ -125,7 +125,6 @@ export default function OrderPage() {
             pageSize={2}
             style={{
               marginTop: 20,
-              marginBottom: 30,
             }}
             onChange={handleChange}
           />

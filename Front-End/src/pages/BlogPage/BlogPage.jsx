@@ -48,7 +48,9 @@ const BlogPage = () => {
         children: categories.map((cate, idx) => ({
           key: `cate-${idx}`,
           label: (
-            <Link to={`/collections?category=${cate.slug}`}>{cate.name}</Link>
+            <Link to={`/collections?category=${cate.slug}`}>
+              {cate.name.toUpperCase()}
+            </Link>
           ),
         })),
       };
