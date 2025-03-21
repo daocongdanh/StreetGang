@@ -30,6 +30,14 @@ class OrderController {
       await OrderService.getOrderById(req)
     ).send(res);
   };
+
+  static payOsSuccess = async (req, res) => {
+    await OrderService.payOsSuccess(req, res);
+  };
+
+  static payOsCancel = async (req, res) => {
+    await OrderService.payOsCancel(req, res);
+  };
 }
 
 module.exports = OrderController;

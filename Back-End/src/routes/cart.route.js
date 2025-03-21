@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const CartController = require("../controllers/cart.controller");
+const delayMiddleware = require("../middlewares/delay");
 const asyncHandler = require("../middlewares/asyncHandler");
 
-router.post("/", asyncHandler(CartController.addToCart));
+router.post("/", delayMiddleware(300), asyncHandler(CartController.addToCart));
 router.get("/user/:userId", asyncHandler(CartController.getCartByUser));
 router.put("/cart-item/:productId", asyncHandler(CartController.updateCart));
 router.delete(

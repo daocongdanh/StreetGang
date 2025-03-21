@@ -5,6 +5,7 @@ const User = require("../models/user.model");
 const Cart = require("../models/cart.model");
 const PaymentMethod = require("../models/paymentMethod.model");
 const { OrderStatus } = require("../constants/index");
+const payOS = require("../configurations/payosConfig");
 
 const { getVNPayConfig, sortObject } = require("../configurations/vnpayConfig");
 
@@ -62,6 +63,18 @@ class OrderService {
         "?" +
         querystring.stringify(vnp_Params, { encode: false })
       );
+    } else if (paymentMethod.name === "PayOS") {
+      const body = {
+        orderCode: Number(String(new Date().getTime()).slice(-6)),
+        amount: totalAmount,
+        description: "Thanh toán đơn hàng",
+        cancelUrl: process.env.PAYOS_CANCEL_URL,
+        returnUrl:
+          process.env.PAYOS_RETURN_URL +
+          `?address=${address}&fee=${fee}&payment=${paymentMethodId}&user=${userId}&totalAmount=${totalAmount}`,
+      };
+      const paymentLinkRes = await payOS.createPaymentLink(body);
+      return paymentLinkRes.checkoutUrl;
     } else {
       const order = new Order({
         userId: userId,
@@ -80,6 +93,33 @@ class OrderService {
 
       return order;
     }
+  };
+
+  static payOsSuccess = async (req, res) => {
+    const { address, fee, payment, user, totalAmount } = req.query;
+    const cart = await Cart.findOne({
+      userId: user,
+    });
+    const order = new Order({
+      userId: user,
+      items: cart.items,
+      address: address,
+      totalAmount: totalAmount,
+      fee: fee,
+      paymentMethod: payment,
+      orderStatus: OrderStatus.PENDING,
+      orderDate: new Date(),
+    });
+    await order.save();
+
+    cart.items = [];
+    await cart.save();
+
+    return res.redirect(`http://localhost:5173/payment-status/00`);
+  };
+
+  static payOsCancel = async (req, res) => {
+    return res.redirect(`http://localhost:5173/payment-status/02`);
   };
 
   static vnpayCallBack = async (req, res) => {
@@ -108,7 +148,7 @@ class OrderService {
     }
 
     return res.redirect(
-      `http://localhost:3000/payment-status/${vnp_TransactionStatus}`
+      `http://localhost:5173/payment-status/${vnp_TransactionStatus}`
     );
   };
 

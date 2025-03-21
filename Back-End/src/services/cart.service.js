@@ -86,7 +86,10 @@ class CartService {
         "Không tìm thấy sản phẩm trong giỏ hàng"
       );
 
-    return await cart.save();
+    await cart.save();
+    return await Cart.findOne({
+      userId: userId,
+    });
   };
 
   static getCartByUser = async (req) => {

@@ -1,10 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const asyncHandler = require("../middlewares/asyncHandler");
+const delayMiddleware = require("../middlewares/delay");
 const UserController = require("../controllers/user.controller");
 
-router.post("/register", asyncHandler(UserController.register));
-router.post("/login", asyncHandler(UserController.login));
+router.post(
+  "/register",
+  delayMiddleware(500),
+  asyncHandler(UserController.register)
+);
+router.post("/login", delayMiddleware(500), asyncHandler(UserController.login));
 router.post(
   "/add-new-address-by-user",
   asyncHandler(UserController.addNewAddressByMyInfo)
@@ -18,6 +23,10 @@ router.put(
   asyncHandler(UserController.updateAddressByMyInfo)
 );
 router.get("/:id", asyncHandler(UserController.getUserById));
-router.put("/:id", asyncHandler(UserController.updateUser));
+router.put(
+  "/:id",
+  delayMiddleware(500),
+  asyncHandler(UserController.updateUser)
+);
 
 module.exports = router;
