@@ -7,7 +7,7 @@ class BlogController {
     new ResponseSuccess(
       StatusCode.OK,
       "Lấy bài viết thành công",
-      await BlogService.getBlogs()
+      await BlogService.getBlogs(req)
     ).send(res);
   };
 }
