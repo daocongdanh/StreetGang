@@ -155,42 +155,33 @@ class OrderService {
   static getOrderByUser = async (req) => {
     const { userId } = req.params;
 
-    var totalItem = (
-      await Order.find({
-        userId: userId,
-      })
-    ).length;
+    var totalItem = await Order.countDocuments({ userId });
 
     const limit = 2;
-
     var page = parseInt(req.query.page || 0);
     page = page > 0 ? page - 1 : page;
 
     const totalPage = Math.ceil(totalItem / limit);
     const skipCount = page * limit;
 
-    const user = await User.findOne({
-      _id: userId,
-    });
+    const user = await User.findById(userId);
     if (!user)
       throw new ResourceNotFoundException(
         "Không tìm thấy user theo Id = " + userId
       );
 
-    const orders = await Order.find({
-      userId: userId,
-    })
+    const orders = await Order.find({ userId })
+      .sort({ orderDate: -1 })
       .skip(skipCount)
       .limit(limit);
 
-    const data = {
+    return {
       page: page + 1,
-      limit: limit,
-      totalPage: totalPage,
-      totalItem: totalItem,
+      limit,
+      totalPage,
+      totalItem,
       result: orders,
     };
-    return data;
   };
 
   static getOrderById = async (req) => {
