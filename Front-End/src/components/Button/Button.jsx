@@ -6,6 +6,7 @@ const Button = ({
   hoverEffect = true,
   loading = false,
   className = "",
+  disabled = false,
 }) => {
   return (
     <button
@@ -20,7 +21,7 @@ const Button = ({
         ${className}
       `}
       type="submit"
-      disabled={loading}
+      disabled={loading || disabled}
       style={
         hoverEffect && !loading
           ? {

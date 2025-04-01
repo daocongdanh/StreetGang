@@ -7,12 +7,12 @@ const members = [
     mssv: "22674951",
     avatar: "chuong.jpg",
   },
-  { name: "Huỳnh Kim Đảm", mssv: "22716751", avatar: "chudong.jpg" },
+  { name: "Huỳnh Kim Đảm", mssv: "22716751", avatar: "kimdam.jpg" },
   { name: "Phạm Ngọc Đăng", mssv: "22640201", avatar: "NgocDang.jpg" },
   {
     name: "Đặng Nguyên Danh",
     mssv: "22724221",
-    avatar: "../img/huynhhoaithanh.jpg",
+    avatar: "nguyendanh.jpg",
   },
 ];
 

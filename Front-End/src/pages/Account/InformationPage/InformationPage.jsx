@@ -39,8 +39,31 @@ export default function InformationPage() {
     });
   };
 
+  const validateForm = (userInfo) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^(09|03|05)\d{8}$/;
+
+    if (!userInfo.fullName.trim()) {
+      error("Họ và tên không được để trống.");
+      return false;
+    }
+    if (!emailRegex.test(userInfo.email)) {
+      error("Email không hợp lệ.");
+      return false;
+    }
+    if (!phoneRegex.test(userInfo.phone)) {
+      error(
+        "Số điện thoại không hợp lệ. Phải có 10 số và bắt đầu bằng 09, 03 hoặc 05."
+      );
+      return false;
+    }
+
+    return true;
+  };
+
   const handleUpdateUser = async (e) => {
     e.preventDefault();
+    if (!validateForm(userInfo)) return;
     try {
       setIsLoading(true);
       const response = await updateUser(userInfo.id, {

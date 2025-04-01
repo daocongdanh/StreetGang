@@ -94,7 +94,9 @@ const BlogPage = () => {
                       <img src={blog.thumbnail} alt={blog.title} />
                     </div>
                     <div className="blog_content">
-                      <h2>{blog.title}</h2>
+                      <Link to={"/blog-at"}>
+                        <h2>{blog.title}</h2>
+                      </Link>
                       <p className="blog_description">
                         {blog.content.length > 151
                           ? blog.content.substring(0, 151) + "..."

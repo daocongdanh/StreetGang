@@ -204,7 +204,12 @@ const ProductPage = () => {
               </div>
               {product.quantity === 0 ? (
                 <div className="w-full" onClick={handleAddToCart}>
-                  <Button loading={isLoading} title={"Hết hàng"} block={true} />
+                  <Button
+                    loading={isLoading}
+                    title={"Hết hàng"}
+                    block={true}
+                    disabled={true}
+                  />
                 </div>
               ) : (
                 <div className="w-full" onClick={handleAddToCart}>
